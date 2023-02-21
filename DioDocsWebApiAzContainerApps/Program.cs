@@ -1,5 +1,8 @@
 using GrapeCity.Documents.Excel;
+using GrapeCity.Documents.Pdf;
+using GrapeCity.Documents.Text;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,5 +35,23 @@ app.MapGet("/diodocsexcelexport", ([FromQuery(Name = "name")] string? name, Http
     response.Body.WriteAsync(ms.ToArray());
 
 }).WithName("GetDioDocsExcelExport");
+
+app.MapGet("/diodocspdfexport", ([FromQuery(Name = "name")] string? name, HttpRequest request, HttpResponse response) =>
+{
+    GcPdfDocument doc = new GcPdfDocument();
+    GcPdfGraphics g = doc.NewPage().Graphics;
+
+    g.DrawString($"Ç±ÇÒÇ…ÇøÇÕÅA{name}ÅI",
+        new TextFormat() { Font = StandardFonts.Helvetica, FontSize = 12 },
+        new PointF(72, 72));
+
+    using var ms = new MemoryStream();
+    doc.Save(ms, false);
+
+    response.Headers.Add("Content-Disposition", "attachment;filename=Result.pdf");
+    response.ContentType = "application/pdf";
+    response.Body.WriteAsync(ms.ToArray());
+
+}).WithName("GetDioDocsPdfExport");
 
 app.Run();

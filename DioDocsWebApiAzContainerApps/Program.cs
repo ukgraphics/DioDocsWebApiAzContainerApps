@@ -3,6 +3,7 @@ using GrapeCity.Documents.Pdf;
 using GrapeCity.Documents.Text;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,8 +47,12 @@ app.MapGet("/pdfexport", ([FromQuery(Name = "name")] string? name, HttpRequest r
     var g = doc.NewPage().Graphics;
 
     g.DrawString($"こんにちは、{name}！",
-        new TextFormat() { FontName = "IPAexゴシック", FontSize = 12 },
-        new PointF(72, 72));
+                 new TextFormat()
+                 {
+                     FontName = "IPAexゴシック",
+                     FontSize = 12
+                 },
+                 new PointF(72, 72));
 
     using var ms = new MemoryStream();
     doc.Save(ms, false);

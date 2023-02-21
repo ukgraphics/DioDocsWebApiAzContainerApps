@@ -19,10 +19,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/diodocsexcelexport", ([FromQuery(Name = "firstname")] string? firstname, [FromQuery(Name = "lastname")] string? lastname, HttpRequest request, HttpResponse response) =>
+app.MapGet("/diodocsexcelexport", ([FromQuery(Name = "name")] string? name, HttpRequest request, HttpResponse response) =>
 {
     var workbook = new Workbook();
-    workbook.Worksheets[0].Range["A1"].Value = $"こんにちは、{firstname} {lastname}！";
+    workbook.Worksheets[0].Range["A1"].Value = $"こんにちは、{name}！";
 
     using var ms = new MemoryStream();
     workbook.Save(ms, SaveFileFormat.Xlsx);
@@ -30,6 +30,7 @@ app.MapGet("/diodocsexcelexport", ([FromQuery(Name = "firstname")] string? first
     response.Headers.Add("Content-Disposition", "attachment;filename=Result.xlsx");
     response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     response.Body.WriteAsync(ms.ToArray());
+
 }).WithName("GetDioDocsExcelExport");
 
 app.Run();

@@ -38,8 +38,8 @@ app.MapGet("/excelexport", ([FromQuery(Name = "name")] string? name, HttpRequest
 
 app.MapGet("/pdfexport", ([FromQuery(Name = "name")] string? name, HttpRequest request, HttpResponse response) =>
 {
-    GcPdfDocument doc = new GcPdfDocument();
-    GcPdfGraphics g = doc.NewPage().Graphics;
+    var doc = new GcPdfDocument();
+    var g = doc.NewPage().Graphics;
 
     g.DrawString($"Ç±ÇÒÇ…ÇøÇÕÅA{name}ÅI",
         new TextFormat() { Font = StandardFonts.Helvetica, FontSize = 12 },

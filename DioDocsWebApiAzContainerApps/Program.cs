@@ -24,6 +24,8 @@ app.UseHttpsRedirection();
 
 app.MapGet("/excelexport", ([FromQuery(Name = "name")] string? name, HttpRequest request, HttpResponse response) =>
 {
+    //Workbook.SetLicenseKey("");
+
     var workbook = new Workbook();
     workbook.Worksheets[0].Range["A1"].Value = $"こんにちは、{name}！";
 
@@ -38,11 +40,13 @@ app.MapGet("/excelexport", ([FromQuery(Name = "name")] string? name, HttpRequest
 
 app.MapGet("/pdfexport", ([FromQuery(Name = "name")] string? name, HttpRequest request, HttpResponse response) =>
 {
+    //GcPdfDocument.SetLicenseKey("");
+
     var doc = new GcPdfDocument();
     var g = doc.NewPage().Graphics;
 
     g.DrawString($"こんにちは、{name}！",
-        new TextFormat() { Font = StandardFonts.Helvetica, FontSize = 12 },
+        new TextFormat() { FontName = "IPAexゴシック", FontSize = 12 },
         new PointF(72, 72));
 
     using var ms = new MemoryStream();

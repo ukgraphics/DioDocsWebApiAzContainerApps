@@ -22,7 +22,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/diodocsexcelexport", ([FromQuery(Name = "name")] string? name, HttpRequest request, HttpResponse response) =>
+app.MapGet("/excelexport", ([FromQuery(Name = "name")] string? name, HttpRequest request, HttpResponse response) =>
 {
     var workbook = new Workbook();
     workbook.Worksheets[0].Range["A1"].Value = $"‚±‚ñ‚É‚¿‚ÍA{name}I";
@@ -34,9 +34,9 @@ app.MapGet("/diodocsexcelexport", ([FromQuery(Name = "name")] string? name, Http
     response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     response.Body.WriteAsync(ms.ToArray());
 
-}).WithName("GetDioDocsExcelExport");
+}).WithName("GetExcelExport");
 
-app.MapGet("/diodocspdfexport", ([FromQuery(Name = "name")] string? name, HttpRequest request, HttpResponse response) =>
+app.MapGet("/pdfexport", ([FromQuery(Name = "name")] string? name, HttpRequest request, HttpResponse response) =>
 {
     GcPdfDocument doc = new GcPdfDocument();
     GcPdfGraphics g = doc.NewPage().Graphics;
@@ -52,6 +52,6 @@ app.MapGet("/diodocspdfexport", ([FromQuery(Name = "name")] string? name, HttpRe
     response.ContentType = "application/pdf";
     response.Body.WriteAsync(ms.ToArray());
 
-}).WithName("GetDioDocsPdfExport");
+}).WithName("GetPdfExport");
 
 app.Run();

@@ -3,7 +3,6 @@ using GrapeCity.Documents.Pdf;
 using GrapeCity.Documents.Text;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing;
-using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 

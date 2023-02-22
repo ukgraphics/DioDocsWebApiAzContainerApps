@@ -23,7 +23,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/excelexport", ([FromQuery(Name = "name")] string? name, HttpRequest request, HttpResponse response) =>
+app.MapGet("/excelexport", ([FromQuery(Name = "name")] string? name, HttpResponse response) =>
 {
     //Workbook.SetLicenseKey("");
 
@@ -39,7 +39,7 @@ app.MapGet("/excelexport", ([FromQuery(Name = "name")] string? name, HttpRequest
 
 }).WithName("GetExcelExport");
 
-app.MapGet("/pdfexport", ([FromQuery(Name = "name")] string? name, HttpRequest request, HttpResponse response) =>
+app.MapGet("/pdfexport", ([FromQuery(Name = "name")] string? name, HttpResponse response) =>
 {
     //GcPdfDocument.SetLicenseKey("");
 
